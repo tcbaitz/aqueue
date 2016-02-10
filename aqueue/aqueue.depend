@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1455073246 source:c:\users\jesus\desktop\aqueue\aqueuemain.cpp
+	"book.hpp"
+	"aqueue.hpp"
+	<queue>
+	<iostream>
+	<cstdio>
+	<cmath>
+	<cstdlib>
+	<vector>
+	<limits>
+	<fstream>
+	<iterator>
+	<algorithm>
+	"Complexity_Timer.hpp"
+	"Complexity_Recorder.hpp"
+
+1454789187 c:\users\jesus\desktop\aqueue\book.hpp
+	<iostream>
+	<cstdlib>
+	<time.h>
+
+1454795391 c:\users\jesus\desktop\aqueue\aqueue.hpp
+	"queue.hpp"
+
+1454789142 c:\users\jesus\desktop\aqueue\queue.hpp
+
+1454789238 c:\users\jesus\desktop\aqueue\queuetest.hpp
+
+1454789372 c:\users\jesus\desktop\aqueue\complexity_timer.hpp
+	<vector>
+	<ctime>
+
+1454789362 c:\users\jesus\desktop\aqueue\complexity_recorder.hpp
+	<vector>
+	<iostream>
+	<iomanip>
+

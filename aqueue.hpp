@@ -7,7 +7,7 @@
 // complete AQueue template class
 
 // First, get the declaration for the base stack class
-#include "queue.h"
+#include "queue.hpp"
 
 // This is the declaration for AStack.
 // Array-based queue implementation
@@ -19,7 +19,7 @@ private:
   E *listArray;           // Array holding queue elements
 
 public:
-  AQueue(int size =defaultSize) {  // Constructor 
+  AQueue(int size =defaultSize) {  // Constructor
     // Make list array one position larger for empty slot
     maxSize = size+1;
     rear = 0;  front = 1;
