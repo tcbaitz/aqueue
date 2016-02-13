@@ -50,4 +50,5 @@ public:
 
   virtual int length() const         // Return length
    { return ((rear+maxSize) - front + 1) % maxSize; }
+
 };

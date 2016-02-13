@@ -22,6 +22,7 @@ counts.
 
 using std::cout;
 
+/*
 template <class Container>
 typename Container::value_type median(Container &c)
 {
@@ -29,6 +30,15 @@ typename Container::value_type median(Container &c)
   nth_element(c.begin(), midpoint, c.end());
   return *midpoint;
 }
+*/
+
+template <class Container>
+typename Container::value_type points_to_ds(Container &c)
+{
+  typename Container::iterator ds_begin = c.begin();
+  return *ds_begin;
+}
+
 
 template <class Timer>
 class recorder {
@@ -38,10 +48,10 @@ public:
     void record(const Timer& t) {
       times.push_back(t.time());
   }
-  void report(std::ostream& o, int repeat_factor)
+  void report(std::ostream& o)
   {
     o << std::fixed << std::setprecision(3) << std::setw(12)
-      << median(times)/repeat_factor;
+      << points_to_ds(times);
       o << "     ";
   }
   void reset() {

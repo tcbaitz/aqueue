@@ -6,11 +6,13 @@
 // Test program for the array-based queue class
 
 #include "book.hpp"
-
 #include "aqueue.hpp"
+#include "EMaqueue.hpp"
+#include "LLQueue.hpp"
 
 //#include "QueueTest.hpp"
 #include <queue>
+#include <deque>
 #include <iostream>
 #include <cstdio>
 #include <cmath>
@@ -39,19 +41,154 @@ typedef int U;
 // (The median computation is done in class recorder.)
 // The median is used here rather than the mean because it is less susceptible to fluctuation due to possibly large fluctuations in the individual times.
 
+//total number of algorithims being tested
+const int number_of_algorithms = 10;
+//the number times the number of elements will be multiplied
+const int number_of_trials = 11;
+
+const char* headings[number_of_algorithms] =
+{"| EM Array Queue ",
+ "| Book ArrayQueue",
+ "| STL Queue      ",
+ "| LinkedListQueue",
+ "| STL Deque      ",
+ "| EM Dequeue     ",
+ "| Book Dequeue   ",
+ "| STL Queue Pop  ",
+ "| LinkedListQueue",
+ "| STL Deque"};
+
+int main()
+{
+    int START_SIZE = 32768;
+    int INCREMENT_FACTOR = 2;
+    int current_size = START_SIZE;
+//    int max_size = START_SIZE^(INCREMENT_FACTOR*number_of_trials);
+// for our outputting of the results
+    ofstream ofs("results.txt");
+
+// this is going to hold the measurements
+    vector<recorder<timer> > stats(number_of_algorithms);
+
+// The "U" is the type for the queues x and y (poorly named, i know). Using the largest sequence multiplied by factor to allocate memory
+    //EMAQueue<U> x(current_size);
+
+    cout << "________";
+    for (int i = 0; i < number_of_algorithms; ++i)
+      cout << headings[i];
+    cout << endl;
+
+    cout << "  Size  ";
+    for (int i = 0; i < number_of_algorithms; ++i)
+      cout << "|      Time      ";
+    cout << endl;
+
+
+
+    for (int count = 0; count < number_of_trials; count ++)
+    {
+        //displays the number of elements that will be added to the data structures
+        cout << setw(8) << current_size << flush;
+        ofs << setw(8) << current_size;
+        //resets stats
+        for (int i = 0; i < number_of_algorithms; ++i)
+            stats[i].reset();
+
+        //start of testing
+        for (int j = 0; j < number_of_trials; ++j)
+        {
+            //initialize data structures each trial
+            EMAQueue<U> EMQ(current_size);
+            AQueue<U> AQ(current_size);
+            queue<U> STLQ;
+            LLQueue LLQ;
+            deque<int> DQ;
+
+            for (int i = 0; i < number_of_algorithms; ++i)
+            {
+               timer1.restart();
+
+               for (int k = 0; k < current_size; ++k)
+               {
+                 //data type operations to be tested
+                 switch (i)
+                {
+                    case 0: EMQ.enqueue(256);
+                        break;
+                    case 1: AQ.enqueue(256);
+                        break;
+                    case 2: STLQ.push(256);
+                        break;
+                    case 3: LLQ.enqueue(256);
+                        break;
+                    case 4: DQ.push_back(256);
+                        break;
+                    case 5: EMQ.dequeue();
+                        break;
+                    case 6: AQ.dequeue();
+                        break;
+                    case 7: STLQ.pop();
+                        break;
+                    case 8: LLQ.dequeue();
+                        break;
+                    case 9: DQ.pop_front();
+                }
+                 //x.enqueue(256);
+                 //algorithm(i, x);
+               }
+                timer1.stop();
+                stats[i].record(timer1);
+            }
+        } // end of trials loop
+
+        for (int i = 0; i < number_of_algorithms; ++i)
+        {
+            stats[i].report(cout);
+            stats[i].report(ofs);
+        }
+
+        cout << endl;
+        ofs << endl;
+        current_size *= INCREMENT_FACTOR;
+    }
+    return 0;
+}
+
+
+
+
+/*
+//attempt 2
+using namespace std;
+
+// timer
+timer timer1;
+
+// U can be any type we want to test. here it's the type of data in the sequence to be sorted; can be changed to any other type for which assignment (=) and less-than comparisons (<) are defined.
+typedef int U;
+
+// experiment will involve timing of 3 algorithms and that the number of "trials" will be 7.
+// By a trial is meant timing of the algorithm for inputs of a single length;
+// rather than taking a single such measurement we take seven measurements with different randomly generated inputs and compute their median.
+// (The median computation is done in class recorder.)
+// The median is used here rather than the mean because it is less susceptible to fluctuation due to possibly large fluctuations in the individual times.
+
 const int number_of_algorithms = 1;
 const int number_of_trials = 7;
 
 // NOTICE factor is going to influence the "extra" time
 const int factor = 5000;
 
+void polulate(queue<int> &, int);
+
 // This template function is to specify which algorithms are used in the timing experiment
 template <class container>
-inline void algorithm(int k, container &x, int BigK)
+inline void algorithm(int k, container &x, int some_size)
 {
     switch (k)
     {
-        case 0: x.push(BigK);
+        //case 0: populate(x, some_size);
+        case 0: x.push(256);
     }
 }
 
@@ -64,7 +201,7 @@ const char* headings[number_of_algorithms] =
 
 int main()
 {
-    int START_SIZE = 1024;
+    int START_SIZE = 2;
     int INCREMENT_FACTOR = 2;
     int current_size = START_SIZE;
     int max_size = START_SIZE^(INCREMENT_FACTOR*number_of_trials);
@@ -131,7 +268,13 @@ int main()
     return 0;
 }
 
-/* example implementation
+void populate(queue<int> &x, int some_size){
+    for(int count = 0; count < some_size; count++){
+        x.push(count);
+    }
+}
+
+//example implementation
 // timer
 timer timer1;
 

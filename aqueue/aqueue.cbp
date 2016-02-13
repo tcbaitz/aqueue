@@ -35,9 +35,12 @@
 		<Unit filename="../Aqueuemain.cpp" />
 		<Unit filename="../Complexity_Recorder.hpp" />
 		<Unit filename="../Complexity_Timer.hpp" />
+		<Unit filename="../LLQueue.hpp" />
 		<Unit filename="../QueueTest.hpp" />
 		<Unit filename="../aqueue.hpp" />
 		<Unit filename="../book.hpp" />
+		<Unit filename="../emaqueue.cpp" />
+		<Unit filename="../emaqueue.hpp" />
 		<Unit filename="../queue.hpp" />
 		<Extensions>
 			<code_completion />
